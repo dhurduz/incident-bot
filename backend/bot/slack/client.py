@@ -218,7 +218,8 @@ def return_slack_channel_info() -> Dict[str, str]:
     try:
         res = slack_web_client.conversations_list(
             exclude_archived=True,
-            limit=200,
+            types="private_channel",
+            limit=500,
         )
 
         while res:
@@ -227,7 +228,8 @@ def return_slack_channel_info() -> Dict[str, str]:
             if res.get("response_metadata").get("next_cursor") != "":
                 res = slack_web_client.conversations_list(
                     exclude_archived=True,
-                    limit=200,
+                    limit=500,
+                    types="private_channel",
                     cursor=res.get("response_metadata").get("next_cursor"),
                 )
             else:

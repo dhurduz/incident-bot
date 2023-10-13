@@ -181,6 +181,7 @@ class Configuration:
             "integrations": {
                 "required": False,
                 "type": "dict",
+                "nullable": True,
                 "schema": {
                     "atlassian": {
                         "required": False,
@@ -318,7 +319,10 @@ class Configuration:
 
     @property
     def integrations(self) -> Dict:
-        return self.live.get("integrations")
+        integrations = self.live.get("integrations")
+        if integrations is None:
+            integrations = {}
+        return integrations
 
     @property
     def links(self) -> Dict:
